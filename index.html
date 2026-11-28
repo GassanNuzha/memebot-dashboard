@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0b0f14" />
+  <meta name="referrer" content="no-referrer" />
+  <title>MemeTrader Live</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="vendor/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <h1>MemeTrader Night Desk</h1>
+        <div class="live-row">
+          <span id="statusPill" class="pill stalled"><span class="dot"></span><span id="statusText">loading</span></span>
+          <span id="conn" class="conn">loading…</span>
+          <span id="modeLine" class="sub" style="color:var(--muted);font-size:.8rem"></span>
+        </div>
+      </div>
+      <div class="clock" id="clockBox">
+        <span class="clock-label">Last updated</span>
+        <strong id="lastUpdate">—</strong>
+        <span id="lastAgo">waiting for data</span>
+      </div>
+    </header>
+
+    <div id="staleBanner" class="stale-banner">
+      This page is showing numbers from more than 3 minutes ago. The bot computer may be paused — charts and P&amp;L will catch up when it comes back.
+    </div>
+
+    <section class="kpis">
+      <div class="kpi">
+        <div class="label">Bank</div>
+        <div class="val" id="kpiBank">—</div>
+        <div class="hint" id="kpiBankHint">core start —</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Realized P&amp;L</div>
+        <div class="val" id="kpiReal">—</div>
+        <div class="hint">from the bot ledger</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Unrealized</div>
+        <div class="val" id="kpiUnreal">—</div>
+        <div class="hint" id="kpiOpenHint">no open positions</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Vs start</div>
+        <div class="val" id="kpiVs">—</div>
+        <div class="hint" id="kpiVsHint">bank − core start</div>
+      </div>
+      <div class="kpi">
+        <div class="label">To floor</div>
+        <div class="val" id="kpiFloor">—</div>
+        <div class="hint" id="kpiFloorHint">20% floor —</div>
+      </div>
+      <div class="kpi">
+        <div class="label">SOL</div>
+        <div class="val" id="kpiSol">—</div>
+        <div class="hint" id="kpiSolHint">—</div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="card">
+        <h2>Bank over time</h2>
+        <div class="chart-box"><canvas id="bankChart"></canvas></div>
+        <div class="hint" id="bankChartHint" style="color:var(--faint);font-size:.72rem;margin-top:6px"></div>
+      </div>
+      <div class="card">
+        <h2 id="pnlChartTitle">Cumulative trading P&amp;L</h2>
+        <div class="chart-box"><canvas id="pnlChart"></canvas></div>
+        <div class="hint" id="pnlChartHint" style="color:var(--faint);font-size:.72rem;margin-top:6px">realized trades only (core + copy sleeve)</div>
+      </div>
+    </section>
+
+    <section class="stats" id="statsRow"></section>
+
+    <section class="card" style="margin-bottom:16px">
+      <h2>Open positions</h2>
+      <div class="scroll" id="posTable"><div class="empty">No open positions</div></div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px" id="sleeveCard">
+      <h2>Copy sleeve ($40, separate from core)</h2>
+      <div class="stats" id="sleeveRow"><div class="empty">Copy sleeve not started</div></div>
+      <div class="hint" id="sleeveHint" style="color:var(--faint);font-size:.75rem;margin-top:8px"></div>
+    </section>
+
+    <section class="card" style="margin-bottom:16px">
+      <h2>Modes</h2>
+      <div class="modes" id="modes"></div>
+    </section>
+
+    <section class="card">
+      <h2>Trade feed</h2>
+      <div class="scroll feed" id="feed"><div class="empty">No trades yet</div></div>
+    </section>
+
+    <footer>Public read-only view · times in Eastern (America/Detroit) · refreshes data.json about every 20 seconds · position charts load from DexScreener and GeckoTerminal in your browser</footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
